@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Todo App</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='myedit.css') }}">
+    </head>
+    <body>
+        <h1>My Flask Todo App</h1>
+        <form action="/add_task" method="POST">
+            <label for="task_name">Task:</label>
+            <input type="text" name="content" placeholder="Add new task.." required>
+            <input type="submit" value="Add Task">
+        </form>
+        
+       <div class="board">
+            <div class="column">
+                <h2>Backlog</h2>
+                <ul>
+                    {% for task in backlog %}
+                    <li>
+                        {{ task.content }}
+                        <div class="actions">
+                            <a href="/update/{{ task.id }}/in_progress">▶️</a>
+                            <a href="/delete/{{ task.id }}">❌</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="column">
+                <h2>In Progress</h2>
+                <ul>
+                    {% for task in in_progress %}
+                    <li>
+                        {{ task.content }}
+                        <div class="actions">
+                            <a href="/update/{{ task.id }}/done">✅</a>
+                            <a href="/delete/{{ task.id }}">❌</a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="column">
+                <h2>Done</h2>
+                <ul>
+                    {% for task in done %}
+                    <li>
+                        {{ task.content }}
+                        <div class="actions">
+                            <a href="/delete/{{ task.id }}"></a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+       </div>
+    </body>
+</html>
